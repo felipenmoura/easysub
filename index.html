@@ -1,0 +1,91 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <div style="float: left; width: 49%;">
+            <video id="video" src="PPW-1.mov" style="width: 400px;" controls="controls"></video>
+            <br/>
+            <input type="button" value="Play" onclick="startVideo();" />
+            <input type="button" value="Speaking" onmousedown="speakingStart();" onmouseup="speakingStop();" />
+            
+        </div>
+        <div id="subtitles-container" style="white-space: pre; float: left; border: solid 1px gray; width: 49%; "></div>
+        <script>
+            
+            /*
+             1
+             00:00:20,000 --> 00:00:24,400
+             Altocumulus clouds occur between six thousand
+             **/
+            
+            
+            
+            var v= document.getElementById('video'),
+                sContainer= document.getElementById('subtitles-container'),
+                playing= false,
+                stCount= 1,
+                speakingStartTime= 0,
+                speakingStopTime= 0;
+            
+            
+            var formatTime= function(s){
+                var str= "",
+                    h= 0, m= 0,
+                    tmp;
+                
+                while(s>60){
+                    s= s-60;
+                    m++
+                }
+                while(m>60){
+                    m= m-60;
+                    h++;
+                }
+                s= s.toFixed(3).toString().replace('.', ',');
+                
+                str= (h<10? '0'+h: h)+':'+(m<10? '0'+m: m)+':'+s;
+                return str;
+            };
+            
+            var startVideo= function(){
+                if(playing){
+                    speakingStartTime= 0;
+                    playing= false;
+                    v.pause();
+                }else{
+                    playing= true;
+                    v.play();
+                }
+            };
+            
+            var speakingStart= function(){
+                console.log(v.currentTime);
+                speakingStartTime= v.currentTime;
+            };
+            
+            var speakingStop= function(){
+                
+                var str= "",
+                    subtitle= "";
+                
+                
+                speakingStopTime= v.currentTime;
+                v.pause();
+                subtitle= prompt("What did they say?");
+                
+                str= stCount+"\n"+formatTime(speakingStartTime)+ ' ---> '+ formatTime(speakingStopTime)+"\n"+subtitle+"\n\n";
+                stCount++;
+                sContainer.innerHTML+= str;
+                
+            };
+        </script>
+        
+    </body>
+</html>
