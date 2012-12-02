@@ -1,91 +1,58 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html>
     <head>
         <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link type="text/css" href="styles/default.css" rel="stylesheet" />
+        
+        <script src="scripts/jquery-1.8.2.min.js"></script>
+        <script src="scripts/mustache.js"></script>
     </head>
     <body>
-        <div style="float: left; width: 49%;">
-            <video id="video" src="PPW-1.mov" style="width: 400px;" controls="controls"></video>
+        
+        <script type="text/txt" id="tpl-subtitle">
+            {{#list}}
+            <div class="subtitle">
+                <div class="tools">
+                    <input type="checkbox" class="selected" />
+                    <input type="integer" class="hours" maxlength="2" value="{{startTime.hours}}" /><span>:</span>
+                    <input type="integer" class="minutes" maxlength="2" value="{{startTime.minutes}}" /><span>:</span>
+                    <input type="integer" class="seconds" maxlength="2" value="{{startTime.seconds}}" /><span>,</span>
+                    <input type="integer" class="hundredth" maxlength="3" value="{{startTime.hundredth}}" />
+                    <span> --> </span>
+                    <input type="integer" class="hours" maxlength="2" value="{{stopTime.hours}}" /><span>:</span>
+                    <input type="integer" class="minutes" maxlength="2" value="{{stopTime.minutes}}" /><span>:</span>
+                    <input type="integer" class="seconds" maxlength="2" value="{{stopTime.seconds}}" /><span>,</span>
+                    <input type="integer" class="hundredth" maxlength="3" value="{{stopTime.hundredth}}" />
+                    <img src="images/delete-sub.png" />
+                    <img src="images/clock-adjust.png" />
+                </div>
+                <textarea class="output">{{output}}</textarea>
+            </div>
+            {{/list}}
+        </script>
+        
+        <div class="leftPane">
+            Select the video *<input type="url" id="video-src" value="videos/PPW-1.mov" /><br/>
+            <div>
+                Import existing subtitle <input type="file" id="srt-src" value="videos/1.srt"/>
+                <input type="button" value="Open" id="imporSRT">
+            </div>
+            <div class="videoContainer">
+                <video id="video" src="videos/PPW-1.mov" controls="controls"></video>
+            </div>
             <br/>
-            <input type="button" value="Play" onclick="startVideo();" />
-            <input type="button" value="Speaking" onmousedown="speakingStart();" onmouseup="speakingStop();" />
+            <input type="button" value="Play" onclick="ES.startVideo();" />
+            <input type="button" value="Speaking" onmousedown="ES.speakingStart();" onmouseup="ES.speakingStop();" />
             
         </div>
-        <div id="subtitles-container" style="white-space: pre; float: left; border: solid 1px gray; width: 49%; "></div>
-        <script>
-            
-            /*
-             1
-             00:00:20,000 --> 00:00:24,400
-             Altocumulus clouds occur between six thousand
-             **/
-            
-            
-            
-            var v= document.getElementById('video'),
-                sContainer= document.getElementById('subtitles-container'),
-                playing= false,
-                stCount= 1,
-                speakingStartTime= 0,
-                speakingStopTime= 0;
-            
-            
-            var formatTime= function(s){
-                var str= "",
-                    h= 0, m= 0,
-                    tmp;
+        <div class="rightPane">
+            <div id="subtitles-container">
                 
-                while(s>60){
-                    s= s-60;
-                    m++
-                }
-                while(m>60){
-                    m= m-60;
-                    h++;
-                }
-                s= s.toFixed(3).toString().replace('.', ',');
-                
-                str= (h<10? '0'+h: h)+':'+(m<10? '0'+m: m)+':'+s;
-                return str;
-            };
-            
-            var startVideo= function(){
-                if(playing){
-                    speakingStartTime= 0;
-                    playing= false;
-                    v.pause();
-                }else{
-                    playing= true;
-                    v.play();
-                }
-            };
-            
-            var speakingStart= function(){
-                console.log(v.currentTime);
-                speakingStartTime= v.currentTime;
-            };
-            
-            var speakingStop= function(){
-                
-                var str= "",
-                    subtitle= "";
-                
-                
-                speakingStopTime= v.currentTime;
-                v.pause();
-                subtitle= prompt("What did they say?");
-                
-                str= stCount+"\n"+formatTime(speakingStartTime)+ ' ---> '+ formatTime(speakingStopTime)+"\n"+subtitle+"\n\n";
-                stCount++;
-                sContainer.innerHTML+= str;
-                
-            };
-        </script>
+            </div>
+        </div>
+        
+        <script src="scripts/easysub.js"></script>
         
     </body>
 </html>

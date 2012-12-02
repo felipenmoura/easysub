@@ -1,0 +1,118 @@
+html, body{
+    height: 100%;
+    overflow: hidden;
+    margin: 0px;
+}
+
+.rightPane, .leftPane{
+    width: 49%;
+    height: 100%;
+}
+.leftPane{
+    float: left;
+    margin-left: 4px;
+}
+.rightPane{
+    float: right;
+}
+.videoContainer{
+    text-align: center;
+}
+#video{
+    display: inline-block;
+    width: 100%;
+    border: solid 1px black;
+    margin: auto;
+}
+
+#subtitles-container{
+    border-left: solid 2px #77d;
+    background-color: #ddf;
+    height: 100%;
+    /*border-radius: 10px;*/
+    
+    float: left;
+    width: 100%;
+    overflow: auto;
+}
+
+.subtitle{
+    width: 94%;
+    margin: auto;
+    margin-top: 8px;
+    border-box: border-box;
+    -moz-border-box: border-box;
+    padding: 2px 8px 2px 8px;
+    border-radius: 10px;
+    border: solid 1px transparent;
+}
+    .hours, .minutes, .seconds{
+        text-align: center;
+        width: 14px;
+        margin: 0px;
+    }
+    .hundredth{
+        text-align: center;
+        width: 22px;
+    }
+
+.subtitle:hover,
+.subtitle.selected{
+    background-color: antiquewhite;
+    border: solid 1px white;
+    box-shadow: 0px 0px 4px gray;
+}
+.subtitle .tools{
+    cursor: default;
+}
+.subtitle .tools input[type=checkbox]:not(:checked){
+    visibility: hidden;
+}
+
+.subtitle .tools img{
+    margin-top: 3px;
+    -webkit-transform: translateY(4px);
+    -moz-transform: translateY(4px);
+    -ms-transform: translateY(4px);
+    transform: translateY(4px);
+    cursor: pointer;
+    
+    visibility: hidden;
+}
+.subtitle:hover .tools img,
+.subtitle.selected .tools img{
+    visibility: visible;
+}
+
+.subtitle:hover .tools input[type=checkbox],
+.subtitle.selected .tools input[type=checkbox]{
+    visibility: visible;
+}
+.subtitle .tools input:not([type=checkbox]){
+    border: solid 2px transparent;
+    background: transparent;
+}
+.subtitle:hover .tools input:not([type=checkbox]),
+.subtitle.selected .tools input:not([type=checkbox]){
+    border: inset 2px;
+    background: white;
+}
+.subtitle textarea{
+    width: 100%;
+    height: 30px;
+    line-height: 14px;
+    font-size: 13px;
+    font-family: monospace;
+    color: #444;
+    
+    border: solid 1px transparent;
+    background: transparent;
+    
+    resize: none;
+}
+
+.subtitle:hover textarea,
+.subtitle.selected textarea{
+    border: solid 1px gray;
+    background: white;
+}

@@ -1,2 +1,12 @@
+
+# Resources
 videos/*
 !videos/.gitkeep
+/nbproject/private/
+
+# Development tools
+.DS_Store
+nbproject
+
+
+
